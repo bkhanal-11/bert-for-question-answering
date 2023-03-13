@@ -23,8 +23,8 @@ class BERTLayers(nn.Module):
         self.ffn = FullyConnected(embedding_dim=d_model,
                                   fully_connected_dim=fully_connected_dim)
 
-        self.layernorm1 = nn.LayerNorm(d_model, eps=layernorm_eps)
-        self.layernorm2 = nn.LayerNorm(d_model, eps=layernorm_eps)
+        self.layernorm1 = LayerNorm(d_model, eps=layernorm_eps)
+        self.layernorm2 = LayerNorm(d_model, eps=layernorm_eps)
 
         self.dropout_ffn = nn.Dropout(dropout_rate)
 

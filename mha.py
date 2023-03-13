@@ -39,19 +39,19 @@ class MultiHeadAttention(nn.Module):
 
         self.self_attention = ScaledDotProductAttention(dropout)
         
-        self.query_linear = nn.Linear(self.head_dim, self.d_model)
-        self.key_linear = nn.Linear(self.head_dim, self.d_model)
-        self.value_linear = nn.Linear(self.head_dim, self.d_model)
-        self.out_linear = nn.Linear(d_model, d_model)
+        self.query_linear = nn.Linear(self.head_dim, self.head_dim)
+        self.key_linear = nn.Linear(self.head_dim, self.head_dim)
+        self.value_linear = nn.Linear(self.head_dim, self.head_dim)
+        self.out_linear = nn.Linear(self.head_dim * self.num_heads, d_model)
 
     def forward(self, query, key, value, mask=None):
         batch_size = query.size(0)
 
         # Linear transformations
-        query = query.view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
-        key = key.view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
-        value = value.view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
-
+        query = query.view(batch_size, -1, self.num_heads, self.head_dim)
+        key = key.view(batch_size, -1, self.num_heads, self.head_dim)
+        value = value.view(batch_size, -1, self.num_heads, self.head_dim)
+        
         # Linear transformations
         query = self.query_linear(query)
         key = self.key_linear(key)

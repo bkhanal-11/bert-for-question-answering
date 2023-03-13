@@ -36,7 +36,7 @@ class JointBERTEmbedding(nn.Module):
     def __init__(self, vocab_size, d_model, max_seq_len):
         super(JointBERTEmbedding, self).__init__()
 
-        self.token_embedding = nn.Embedding(vocab_size, d_model, padding_idx=0)
+        self.token_embedding = nn.Embedding(vocab_size, d_model)
         self.segment_embedding = nn.Embedding(2, d_model)
 
         self.position_embedding = nn.Embedding(max_seq_len, d_model)
