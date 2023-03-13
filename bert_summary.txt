@@ -1,0 +1,29 @@
+BERT Base Model
+Total Parameters: 110 million
+
+Embeddings:
+- Token Embeddings: 84 million
+- Segment Embeddings: 768
+- Position Embeddings: 768
+
+Encoder Layers:
+- Multi-Head Self-Attention:
+    - Query Linear: 768 x 768 = 589,824
+    - Key Linear: 768 x 768 = 589,824
+    - Value Linear: 768 x 768 = 589,824
+    - Output Linear: 768 x 768 = 589,824
+    - Attention Dropout: 0.1
+    - Output Dropout: 0.1
+    - Number of heads: 12
+    - Total Self-Attention Parameters per Layer: (589,824 x 4) x 12 = 27,091,712
+- Layer Normalization: 1,536 (768 x 2)
+- Position-wise Feed-Forward Network:
+    - Input Linear: 768 x 3072 = 2,359,296
+    - Output Linear: 3072 x 768 = 2,359,296
+    - ReLU Activation: N/A
+    - Dropout: 0.1
+    - Total FFN Parameters per Layer: (2,359,296 + 2,359,296) x 2 = 9,437,184
+- Layer Normalization: 1,536 (768 x 2)
+
+Total Parameters per Encoder Layer: 27,091,712 + 9,437,184 + 3,072 = 36,532,968
+Total Parameters in BERT Base Model: 36,532,968 x 12 + 84,080,640 = 109,482,240 ~ 110 million
