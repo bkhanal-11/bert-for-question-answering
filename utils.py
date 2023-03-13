@@ -58,3 +58,7 @@ class JointBERTEmbedding(nn.Module):
 
         return embeddings
 
+if __name__ =="__main__":
+    model = JointBERTEmbedding(vocab_size=30522, d_model=768, max_seq_len=512)
+    num_params = sum(p.numel() for p in model.parameters())
+    print(f"Number of parameters: {num_params}")

@@ -51,7 +51,7 @@ class MultiHeadAttention(nn.Module):
         query = query.view(batch_size, -1, self.num_heads, self.head_dim)
         key = key.view(batch_size, -1, self.num_heads, self.head_dim)
         value = value.view(batch_size, -1, self.num_heads, self.head_dim)
-        
+
         # Linear transformations
         query = self.query_linear(query)
         key = self.key_linear(key)
@@ -68,14 +68,16 @@ class MultiHeadAttention(nn.Module):
 
 if __name__ == "__main__":
     # Define input tensor
-    batch_size = 2
-    seq_len = 5
-    d_model = 16
-    num_heads = 4
+    batch_size = 32
+    seq_len = 512
+    d_model = 768
+    num_heads = 12
     x = torch.randn(batch_size, seq_len, d_model)
 
     # Create MultiHeadAttention module
     mha = MultiHeadAttention(num_heads=num_heads, d_model=d_model)
+    num_params = sum(p.numel() for p in mha.parameters())
+    print(f"Number of parameters: {num_params}")
 
     # Obtain output tensor
     output = mha(x, x, x)
