@@ -39,9 +39,9 @@ class MultiHeadAttention(nn.Module):
 
         self.self_attention = ScaledDotProductAttention(dropout)
         
-        self.query_linear = nn.Linear(self.head_dim, self.head_dim)
-        self.key_linear = nn.Linear(self.head_dim, self.head_dim)
-        self.value_linear = nn.Linear(self.head_dim, self.head_dim)
+        self.query_linear = nn.Linear(self.head_dim, self.d_model)
+        self.key_linear = nn.Linear(self.head_dim, self.d_model)
+        self.value_linear = nn.Linear(self.head_dim, self.d_model)
         self.out_linear = nn.Linear(d_model, d_model)
 
     def forward(self, query, key, value, mask=None):

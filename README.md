@@ -25,3 +25,7 @@ Segment embeddings are used to distinguish between two sentences in the input. I
 3. Position embeddings:
 
 Position embeddings are used to encode the position of each token in the input sequence. Unlike recurrent neural networks (RNNs), transformers do not inherently understand the order of tokens in a sequence. Therefore, BERT uses position embeddings to encode the order of tokens in the input. The position embedding of each token is learned during training and is added to the token embedding before being passed to the transformer encoder. This allows the model to understand the relationships between different parts of the sentence based on their position in the sequence.
+
+### Few lookworthy Resources
+
+[1] Number of parameters in BERT: [How is the number of parameters be calculated in BERT model?](https://stackoverflow.com/a/71472362)
