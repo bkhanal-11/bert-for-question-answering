@@ -1,4 +1,4 @@
-# Bidirectional Encoder Represenation from Transformer (BERT)
+# Bidirectional Encoder Represenation from Transformers (BERT)
 
 BERT (Bidirectional Encoder Representations from Transformers) is a state-of-the-art pre-trained language model developed by Google. It is a deep neural network architecture that has been trained on a large corpus of text data, including the entire Wikipedia and BookCorpus. BERT is able to understand the meaning of words in the context of a sentence, which is a major breakthrough in natural language processing.
 
