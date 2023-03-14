@@ -16,7 +16,6 @@ class TestBERT(unittest.TestCase):
         self.dropout = 0.1
         self.max_positional_emnddings = 512
         self.layer_norm_eps = 1e-12
-        self.mask_idx = 0
         
         self.model = BERT(
             num_layers=self.num_hidden_layers,
@@ -33,7 +32,7 @@ class TestBERT(unittest.TestCase):
         
         self.x = torch.randint(1, self.vocab_size, (self.batch_size, self.input_seq_len))
         self.x_segment = torch.randint(0, 2, (self.batch_size, self.input_seq_len))
-        self.mask = torch.ones_like(self.x).bool()
+        self.mask = (self.x > 0).unsqueeze(1).repeat(1, self.x.size(1), 1).unsqueeze(1)
         
     def test_shape(self):
         # Print the total number of parameters in the model
@@ -43,7 +42,7 @@ class TestBERT(unittest.TestCase):
         # Print a summary of the model architecture and number of parameters
         # summary(self.model, [(self.batch_size, self.input_seq_len), (self.batch_size, self.input_seq_len)], device='cpu')
 
-        output = self.model(self.x, self.x_segment)
+        output = self.model(self.x, self.x_segment, self.mask)
         self.assertEqual(output.shape, (self.batch_size, self.input_seq_len, self.hidden_size))
         
     def test_encoder_layers(self):
@@ -51,7 +50,7 @@ class TestBERT(unittest.TestCase):
             layer = self.model.enc_layers[i]
             
             x = torch.randn((self.batch_size, self.input_seq_len, self.hidden_size))
-            output = layer(x)
+            output = layer(x, self.mask)
             
             self.assertEqual(output.shape, (self.batch_size, self.input_seq_len, self.hidden_size))
     

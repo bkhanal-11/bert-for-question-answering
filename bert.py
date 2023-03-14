@@ -87,8 +87,6 @@ class BERT(nn.Module):
         Returns:
             encoder_out -- Tensor of shape (batch_size, input_seq_len, embedding_dim)
         """
-        seq_len = x.size(1)
-        
         # Add position encoding to the input
         x = self.embedding(x, x_segment)
         
@@ -102,40 +100,3 @@ class BERT(nn.Module):
         encoder_out = x
         
         return encoder_out
-
-if __name__ == '__main__':
-    # BERT-small parameters (from paper)
-    vocab_size = 30522
-    hidden_size = 768
-    num_hidden_layers = 12
-    num_attention_head = 12
-    
-    intermediate_size = 4 * hidden_size
-    dropout = 0.1
-    max_positional_emnddings = 512
-    layer_norm_eps = 1e-12
-    mask_idx = 0
-
-    x = torch.randint(1, 100, (32, 100))
-    x_segment = torch.randint(0, 2, (32, 100))
-
-    model = BERT(
-        num_layers=num_hidden_layers,
-        num_heads=num_attention_head,
-        d_model=hidden_size,
-        fully_connected_dim=intermediate_size,
-        input_vocab_size=vocab_size,
-        maximum_position_encoding=max_positional_emnddings,
-        dropout_rate=dropout,
-        layernorm_eps=layer_norm_eps
-    )
-
-    mask = torch.randint(0, 2, (32, 100))
-    mask = (mask != 0).unsqueeze(1).unsqueeze(2)
-    start = time.time()
-    y = model(x, x_segment)
-
-    
-    print(f'INFERENCE TIME = {time.time() - start}sec')
-    x = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f'NUMBER OF PARAMETERS ARE = {x}')

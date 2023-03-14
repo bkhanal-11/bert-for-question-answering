@@ -29,3 +29,7 @@ Position embeddings are used to encode the position of each token in the input s
 ### Few lookworthy Resources
 
 [1] Number of parameters in BERT: [How is the number of parameters be calculated in BERT model?](https://stackoverflow.com/a/71472362)
+
+[2] Motivation behind different Embeddings in BERT: [How the Embedding Layers in BERT were implemented?](https://medium.com/@_init_/why-bert-has-3-embedding-layers-and-their-implementation-details-9c261108e28a)
+
+[3] Visualization of training for pre-trained BERT: [BERT Summarization](https://github.com/VincentK1991/BERT_summarization_1/blob/master/notebook/Primer_to_BERT_extractive_summarization_March_25_2020.ipynb)

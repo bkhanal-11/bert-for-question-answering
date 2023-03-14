@@ -39,23 +39,22 @@ class MultiHeadAttention(nn.Module):
 
         self.self_attention = ScaledDotProductAttention(dropout)
         
-        self.query_linear = nn.Linear(self.head_dim, self.head_dim)
-        self.key_linear = nn.Linear(self.head_dim, self.head_dim)
-        self.value_linear = nn.Linear(self.head_dim, self.head_dim)
+        self.query_linear = nn.Linear(self.d_model, self.d_model)
+        self.key_linear = nn.Linear(self.d_model, self.d_model)
+        self.value_linear = nn.Linear(self.d_model, self.d_model)
         self.out_linear = nn.Linear(self.head_dim * self.num_heads, d_model)
 
     def forward(self, query, key, value, mask=None):
         batch_size = query.size(0)
-
-        # Linear transformations
-        query = query.view(batch_size, -1, self.num_heads, self.head_dim)
-        key = key.view(batch_size, -1, self.num_heads, self.head_dim)
-        value = value.view(batch_size, -1, self.num_heads, self.head_dim)
-
         # Linear transformations
         query = self.query_linear(query)
         key = self.key_linear(key)
         value = self.value_linear(value)
+
+        # Reshaping tensors
+        query = query.view(batch_size, -1, self.num_heads, self.head_dim)
+        key = key.view(batch_size, -1, self.num_heads, self.head_dim)
+        value = value.view(batch_size, -1, self.num_heads, self.head_dim)
 
         # Scaled dot-product attention
         context = self.self_attention(query, key, value, mask)
@@ -76,7 +75,7 @@ if __name__ == "__main__":
 
     # Create MultiHeadAttention module
     mha = MultiHeadAttention(num_heads=num_heads, d_model=d_model)
-    num_params = sum(p.numel() for p in mha.parameters())
+    num_params = sum(p.numel() for p in mha.parameters() if p.requires_grad)
     print(f"Number of parameters: {num_params}")
 
     # Obtain output tensor
