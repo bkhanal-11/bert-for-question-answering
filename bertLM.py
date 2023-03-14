@@ -1,4 +1,7 @@
+import torch
 import torch.nn as nn
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class NextSentencePrediction(nn.Module):
     """
@@ -43,9 +46,9 @@ class BERTLM(nn.Module):
         :param vocab_size: total vocab size for masked_lm
         """
         super(BERTLM, self).__init__()
-        self.bert = model
-        self.next_sentence = NextSentencePrediction(self.bert.d_model)
-        self.mask_lm = MaskedLanguageModel(self.bert.d_model, vocab_size)
+        self.bert = model.to(device)
+        self.next_sentence = NextSentencePrediction(self.bert.d_model).to(device)
+        self.mask_lm = MaskedLanguageModel(self.bert.d_model, vocab_size).to(device)
 
     def forward(self, x, x_segment, mask=None):
         x = self.bert(x, x_segment, mask=mask)
